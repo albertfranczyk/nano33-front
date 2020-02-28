@@ -1,0 +1,33 @@
+.blog-feed {
+  margin: 2rem 0;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 50px;
+}
+
+.blog-post {
+  cursor: pointer;
+  position: relative;
+  background: #fff 50%;
+  box-shadow: 8px 14px 38px rgba(39,44,49,.06), 1px 3px 8px rgba(39,44,49,.03);
+  overflow: hidden;
+}
+
+.blog-img {
+  min-height: 110%;
+  width: auto;
+  margin: 0;
+}
+
+.blog-title {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  background-color: #fff;
+  padding: 0.4rem 1.7rem 1.7rem;
+  color: hsla(0, 0%, 0%, 0.8);
+}
+
+.blog-title h2 {
+  margin-bottom: 0.7rem;
+}

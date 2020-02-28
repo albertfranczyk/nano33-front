@@ -1,33 +1,51 @@
 import React from "react"
-import { StaticQuery, graphql } from "gatsby"
+import { Link, graphql } from "gatsby"
+import Layout from "../components/layout"
+import './blog.css'
 
+const BlogPage = ({
+  data: {
+    allSitePage: { edges },
+  },
+}) => (
+  <Layout>
+    <div class="blog-feed">
+     {edges.map(edge => (
+       <Link key={edge.node.path} to={edge.node.path}>
+        <div class="blog-post">
+          <div class="blog-title">
+            <h2>{edge.node.context.data.header}</h2>
+            <p>{edge.node.context.data.excerpt}</p>
+          </div>
+        <img class="blog-img" src={edge.node.context.data.heroImage[0].url} alt="lorem" />
+        </div>
+       </Link>))}
 
-const BlogPage = () => (
+    </div>
+  </Layout>
+)
 
-  <StaticQuery
-    query={graphql`
-    query blogQuery {
-      craft {
-        entry {
-          ... on craft_blog_blog_Entry {
-            id
-            title
-            excerpt
-            article
+export const allBlogPosts = graphql`
+  query MyQuery {
+    allSitePage(filter: {componentChunkName: {eq: "component---src-templates-blog-post-js"}}) {
+      edges {
+        node {
+          path
+          context {
+            data {
+              excerpt
+              header
+              heroImage {
+                url
+              }
+              id
+              slug
+            }
           }
         }
       }
     }
-  `}
-
-  render={({craft: {entry}}) => (
-    <h3>{entry.excerpt}</h3>
-    // <div>{entry.article}</div>
-    // <pre>
-    //   {JSON.stringify(entry, null, 2)}
-    // </pre>
-  )}
-  />
-)
+  }
+`
 
 export default BlogPage

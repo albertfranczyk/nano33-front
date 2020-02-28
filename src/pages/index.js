@@ -1,6 +1,5 @@
 import React from "react"
 import { StaticQuery, graphql } from "gatsby"
-import { Link } from "gatsby"
 import Layout from "../components/layout"
 import SEO from "../components/seo"
 
@@ -10,11 +9,13 @@ const IndexPage = () => (
     query={graphql`
     query homeQuery {
       craft {
-        entries {
+        entries(section: "homePage") {
           ... on craft_homePage_homePage_Entry {
             heroImage {
-              url
-            }
+              ... on craft_aws_Asset {
+                url(width: 900)
+              }
+            }  
             header
             subheader
           }
@@ -26,10 +27,9 @@ const IndexPage = () => (
   render={({craft: {entries}}) => (
     <Layout>
       <SEO title="Home" />
-      <pre>
-        {JSON.stringify(entries, null, 2)}
-      </pre>
-      <Link to="/blog">blog</Link>
+      <img fluid src={entries[0].heroImage[0].url} alt="lorem"></img>
+      <h1>{entries[0].header}</h1>
+      <h2>{entries[0].subheader}</h2>
     </Layout>
   )}
   />
